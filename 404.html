@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="generator" content="VuePress 2.0.0-beta.62">
+    <style>
+      :root {
+        --c-bg: #fff;
+      }
+      html.dark {
+        --c-bg: #22272e;
+      }
+      html, body {
+        background-color: var(--c-bg);
+      }
+    </style>
+    <script>
+      const userMode = localStorage.getItem('vuepress-color-scheme');
+			const systemDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+			if (userMode === 'dark' || (userMode !== 'light' && systemDarkMode)) {
+				document.documentElement.classList.toggle('dark', true);
+			}
+    </script>
+    <title>VuePDF</title><meta name="description" content="PDF Viewer for Vue 3">
+    <link rel="preload" href="/VuePDF/assets/style-e2ee7e0d.css" as="style"><link rel="stylesheet" href="/VuePDF/assets/style-e2ee7e0d.css">
+    <link rel="modulepreload" href="/VuePDF/assets/app-ccd96eb7.js"><link rel="modulepreload" href="/VuePDF/assets/404.html-028091e5.js"><link rel="modulepreload" href="/VuePDF/assets/404.html-60b35caa.js"><link rel="prefetch" href="/VuePDF/assets/index.html-0c2743d0.js" as="script"><link rel="prefetch" href="/VuePDF/assets/index.html-2c73552f.js" as="script"><link rel="prefetch" href="/VuePDF/assets/composables.html-1fd84b0e.js" as="script"><link rel="prefetch" href="/VuePDF/assets/events.html-5d8abd30.js" as="script"><link rel="prefetch" href="/VuePDF/assets/introduction.html-39c26947.js" as="script"><link rel="prefetch" href="/VuePDF/assets/methods.html-94a5839d.js" as="script"><link rel="prefetch" href="/VuePDF/assets/props.html-5d657d4a.js" as="script"><link rel="prefetch" href="/VuePDF/assets/slots.html-e560ff3a.js" as="script"><link rel="prefetch" href="/VuePDF/assets/annotation_filter.html-1a5820fa.js" as="script"><link rel="prefetch" href="/VuePDF/assets/fit_parent.html-ad35947f.js" as="script"><link rel="prefetch" href="/VuePDF/assets/highlight_text.html-991043f3.js" as="script"><link rel="prefetch" href="/VuePDF/assets/multiple_pdf.html-59f29d33.js" as="script"><link rel="prefetch" href="/VuePDF/assets/toc.html-1f269e2f.js" as="script"><link rel="prefetch" href="/VuePDF/assets/watermark.html-1285d86c.js" as="script"><link rel="prefetch" href="/VuePDF/assets/annotation_attachment.html-a14720fd.js" as="script"><link rel="prefetch" href="/VuePDF/assets/annotation_forms.html-4adb72d6.js" as="script"><link rel="prefetch" href="/VuePDF/assets/annotation_links.html-1bf3b272.js" as="script"><link rel="prefetch" href="/VuePDF/assets/all_pages.html-944f5fea.js" as="script"><link rel="prefetch" href="/VuePDF/assets/annotation_layer.html-3cdccf08.js" as="script"><link rel="prefetch" href="/VuePDF/assets/one_page.html-e267caa7.js" as="script"><link rel="prefetch" href="/VuePDF/assets/rotation.html-afa6471d.js" as="script"><link rel="prefetch" href="/VuePDF/assets/scale.html-419397bc.js" as="script"><link rel="prefetch" href="/VuePDF/assets/text_layer.html-b996167f.js" as="script"><link rel="prefetch" href="/VuePDF/assets/xfa_layer.html-fe618f0b.js" as="script"><link rel="prefetch" href="/VuePDF/assets/loaded.html-b9bf88fd.js" as="script"><link rel="prefetch" href="/VuePDF/assets/text_highlight.html-42da57a3.js" as="script"><link rel="prefetch" href="/VuePDF/assets/index.html-a908d425.js" as="script"><link rel="prefetch" href="/VuePDF/assets/index.html-979d2b0c.js" as="script"><link rel="prefetch" href="/VuePDF/assets/composables.html-4bf35905.js" as="script"><link rel="prefetch" href="/VuePDF/assets/events.html-065f3536.js" as="script"><link rel="prefetch" href="/VuePDF/assets/introduction.html-96cf3d21.js" as="script"><link rel="prefetch" href="/VuePDF/assets/methods.html-d687db96.js" as="script"><link rel="prefetch" href="/VuePDF/assets/props.html-172930cd.js" as="script"><link rel="prefetch" href="/VuePDF/assets/slots.html-8c514169.js" as="script"><link rel="prefetch" href="/VuePDF/assets/annotation_filter.html-969b68ad.js" as="script"><link rel="prefetch" href="/VuePDF/assets/fit_parent.html-b35b9af8.js" as="script"><link rel="prefetch" href="/VuePDF/assets/highlight_text.html-a800d06d.js" as="script"><link rel="prefetch" href="/VuePDF/assets/multiple_pdf.html-f817832c.js" as="script"><link rel="prefetch" href="/VuePDF/assets/toc.html-99d70dc6.js" as="script"><link rel="prefetch" href="/VuePDF/assets/watermark.html-b3dd2444.js" as="script"><link rel="prefetch" href="/VuePDF/assets/annotation_attachment.html-e1f99d21.js" as="script"><link rel="prefetch" href="/VuePDF/assets/annotation_forms.html-7506f698.js" as="script"><link rel="prefetch" href="/VuePDF/assets/annotation_links.html-62df47df.js" as="script"><link rel="prefetch" href="/VuePDF/assets/all_pages.html-06ea012e.js" as="script"><link rel="prefetch" href="/VuePDF/assets/annotation_layer.html-a582cf67.js" as="script"><link rel="prefetch" href="/VuePDF/assets/one_page.html-de50c9c2.js" as="script"><link rel="prefetch" href="/VuePDF/assets/rotation.html-fd3e0349.js" as="script"><link rel="prefetch" href="/VuePDF/assets/scale.html-b595f596.js" as="script"><link rel="prefetch" href="/VuePDF/assets/text_layer.html-08b9e9fe.js" as="script"><link rel="prefetch" href="/VuePDF/assets/xfa_layer.html-99f77845.js" as="script"><link rel="prefetch" href="/VuePDF/assets/loaded.html-3b3326a3.js" as="script"><link rel="prefetch" href="/VuePDF/assets/text_highlight.html-db404e59.js" as="script">
+  </head>
+  <body>
+    <div id="app"><!--[--><div class="theme-container"><main class="page"><div class="theme-default-content"><h1>404</h1><blockquote>There&#39;s nothing here.</blockquote><a href="/VuePDF/" class="">Take me home</a></div></main></div><!----><!--]--></div>
+    <script type="module" src="/VuePDF/assets/app-ccd96eb7.js" defer></script>
+  </body>
+</html>

@@ -1,0 +1,1 @@
+const a=JSON.parse('{"key":"v-d74a6fde","path":"/examples/advanced/annotation_filter.html","title":"Annotations Filter","lang":"en-US","frontmatter":{},"headers":[],"git":{"updatedTime":1688955190000,"contributors":[{"name":"TaTo30","email":"aldo.hernandez3012@gmail.com","commits":3}]},"filePathRelative":"examples/advanced/annotation_filter.md"}');export{a as data};

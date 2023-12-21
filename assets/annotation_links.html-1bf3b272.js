@@ -1,0 +1,1 @@
+const a=JSON.parse('{"key":"v-ab3e90c6","path":"/examples/annotation_events/annotation_links.html","title":"Links","lang":"en-US","frontmatter":{},"headers":[],"git":{"updatedTime":1688955190000,"contributors":[{"name":"TaTo30","email":"aldo.hernandez3012@gmail.com","commits":3}]},"filePathRelative":"examples/annotation_events/annotation_links.md"}');export{a as data};

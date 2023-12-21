@@ -1,0 +1,36 @@
+import{_ as p,r as n,o as e,c,a as s,w as o,e as l}from"./app-ccd96eb7.js";const u={},i=l(`<h1 id="multiples-pdf" tabindex="-1"><a class="header-anchor" href="#multiples-pdf" aria-hidden="true">#</a> Multiples PDF</h1><div class="language-vue line-numbers-mode" data-ext="vue"><pre class="language-vue"><code><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">setup</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+<span class="token keyword">import</span> <span class="token punctuation">{</span> VuePDF<span class="token punctuation">,</span> usePDF <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&#39;@tato30/vue-pdf&#39;</span>
+<span class="token keyword">import</span> <span class="token punctuation">{</span> ref <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">&#39;vue&#39;</span>
+
+<span class="token keyword">const</span> pdfSources <span class="token operator">=</span> <span class="token punctuation">[</span>
+  <span class="token string">&#39;/example_014.pdf&#39;</span><span class="token punctuation">,</span>
+  <span class="token string">&#39;/example_036.pdf&#39;</span><span class="token punctuation">,</span>
+  <span class="token string">&#39;/example_041.pdf&#39;</span><span class="token punctuation">,</span>
+  <span class="token string">&#39;/example_045.pdf&#39;</span><span class="token punctuation">,</span>
+  <span class="token string">&#39;https://raw.githubusercontent.com/mozilla/pdf.js/ba2edeae/web/compressed.tracemonkey-pldi-09.pdf&#39;</span><span class="token punctuation">,</span>
+<span class="token punctuation">]</span>
+<span class="token comment">// Setting the first (or default) PDF</span>
+<span class="token keyword">const</span> pdfSource <span class="token operator">=</span> <span class="token function">ref</span><span class="token punctuation">(</span>pdfSources<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">const</span> pdfSourceIdx <span class="token operator">=</span> <span class="token function">ref</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">)</span>
+
+<span class="token keyword">const</span> <span class="token punctuation">{</span> pdf <span class="token punctuation">}</span> <span class="token operator">=</span> <span class="token function">usePDF</span><span class="token punctuation">(</span>pdfSource<span class="token punctuation">)</span>
+
+<span class="token keyword">function</span> <span class="token function">nextPdf</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">{</span>
+  pdfSourceIdx<span class="token punctuation">.</span>value <span class="token operator">+=</span> <span class="token number">1</span>
+  <span class="token keyword">if</span> <span class="token punctuation">(</span>pdfSourceIdx<span class="token punctuation">.</span>value <span class="token operator">&gt;=</span> pdfSources<span class="token punctuation">.</span>length<span class="token punctuation">)</span>
+    pdfSourceIdx<span class="token punctuation">.</span>value <span class="token operator">=</span> <span class="token number">0</span>
+  pdfSource<span class="token punctuation">.</span>value <span class="token operator">=</span> pdfSources<span class="token punctuation">[</span>pdfSourceIdx<span class="token punctuation">.</span>value<span class="token punctuation">]</span>
+<span class="token punctuation">}</span>
+</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>template</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span><span class="token punctuation">&gt;</span></span>
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>button</span> <span class="token attr-name">@click</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>nextPdf<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span>
+        Next PDF (Current index: {{ pdfSourceIdx }})
+      <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>button</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>VuePDF</span> <span class="token attr-name">:pdf</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">&quot;</span>pdf<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>template</span><span class="token punctuation">&gt;</span></span>
+</code></pre><div class="line-numbers" aria-hidden="true"><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div><div class="line-number"></div></div></div>`,2);function d(k,r){const a=n("MultiplePDF"),t=n("ClientOnly");return e(),c("div",null,[i,s(t,null,{default:o(()=>[s(a)]),_:1})])}const m=p(u,[["render",d],["__file","multiple_pdf.html.vue"]]);export{m as default};

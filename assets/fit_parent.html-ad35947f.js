@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-f2c952fe","path":"/examples/advanced/fit_parent.html","title":"Fit parent","lang":"en-US","frontmatter":{},"headers":[],"git":{"updatedTime":1688955190000,"contributors":[{"name":"TaTo30","email":"aldo.hernandez3012@gmail.com","commits":4}]},"filePathRelative":"examples/advanced/fit_parent.md"}');export{e as data};

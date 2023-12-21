@@ -1,0 +1,1 @@
+const t=JSON.parse('{"key":"v-f45dcaf4","path":"/examples/text_events/text_highlight.html","title":"Highlight Event","lang":"en-US","frontmatter":{},"headers":[],"git":{"updatedTime":1702772292000,"contributors":[{"name":"TaTo30","email":"aldo.hernandez3012@gmail.com","commits":1}]},"filePathRelative":"examples/text_events/text_highlight.md"}');export{t as data};

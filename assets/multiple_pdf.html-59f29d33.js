@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-0f2bcfb6","path":"/examples/advanced/multiple_pdf.html","title":"Multiples PDF","lang":"en-US","frontmatter":{},"headers":[],"git":{"updatedTime":1700166862000,"contributors":[{"name":"TaTo30","email":"aldo.hernandez3012@gmail.com","commits":5}]},"filePathRelative":"examples/advanced/multiple_pdf.md"}');export{e as data};

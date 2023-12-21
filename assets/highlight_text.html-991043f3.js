@@ -1,0 +1,1 @@
+const e=JSON.parse('{"key":"v-169eb141","path":"/examples/advanced/highlight_text.html","title":"Highlight Text","lang":"en-US","frontmatter":{},"headers":[],"git":{"updatedTime":1702772292000,"contributors":[{"name":"TaTo30","email":"aldo.hernandez3012@gmail.com","commits":1}]},"filePathRelative":"examples/advanced/highlight_text.md"}');export{e as data};

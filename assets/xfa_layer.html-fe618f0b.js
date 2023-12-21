@@ -1,0 +1,1 @@
+const a=JSON.parse('{"key":"v-e08bb73c","path":"/examples/basic/xfa_layer.html","title":"XFA Forms","lang":"en-US","frontmatter":{},"headers":[],"git":{"updatedTime":1690323794000,"contributors":[{"name":"TaTo30","email":"aldo.hernandez3012@gmail.com","commits":1}]},"filePathRelative":"examples/basic/xfa_layer.md"}');export{a as data};
