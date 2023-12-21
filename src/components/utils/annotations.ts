@@ -42,7 +42,7 @@ function buildAnnotationData(type: string, data: any): AnnotationEventPayload {
   return { type, data }
 }
 
-function inputAnnotation(inputEl: any, args?: any) {
+function inputAnnotation(evt: Event, inputEl: any, args?: any) {
   switch (inputEl.type) {
     case 'textarea':
     case 'text':
@@ -89,11 +89,11 @@ function inputAnnotation(inputEl: any, args?: any) {
   }
 }
 
-function fileAnnotation(annotation: any) {
+function fileAnnotation(evt: Event, annotation: any) {
   return buildAnnotationData(FILE_ATTACHMENT, annotation.file)
 }
 
-async function linkAnnotation(annotation: {
+async function linkAnnotation(evt: Event, annotation: {
   dest?: any
   url?: string
   unsafeUrl?: string
@@ -137,41 +137,95 @@ function mergePopupArgs(annotation: HTMLElement) {
   }
 }
 
+function mergePreferences(target: Object, source: Object) {
+  const result = Object.assign({}, target)
+  Object.keys(source).forEach((key: string) => {
+    result[key] = Object.assign(result[key] ?? {}, source[key])
+  })
+  return result
+}
+
+const defaultAnnotationPreferences: Object = {
+  linkAnnotation: {
+    events: ['click'],
+    handler: linkAnnotation,
+  },
+  popupAnnotation: {
+    events: [],
+    handler: () => {},
+  },
+  textAnnotation: {
+    events: [],
+    handler: () => {},
+  },
+  fileAttachmentAnnotation: {
+    events: ['dblclick'],
+    handler: fileAnnotation,
+  },
+  textWidgetAnnotation: {
+    events: ['input'],
+    handler: inputAnnotation,
+  },
+  choiceWidgetAnnotation: {
+    events: ['input'],
+    handler: inputAnnotation,
+  },
+  checkBoxWidgetAnnotation: {
+    events: ['change'],
+    handler: inputAnnotation,
+  },
+  radioButtonWidgetAnnotation: {
+    events: ['change'],
+    handler: inputAnnotation,
+  },
+  pushButtonWidgetAnnotation: {
+    events: ['click'],
+    handler: inputAnnotation,
+  },
+}
+
 // Use this function to handle annotation events
-function annotationEventsHandler(evt: Event, PDFDoc: PDFDocumentProxy, Annotations: Object[]) {
+function annotationEventsHandler(evt: Event, PDFDoc: PDFDocumentProxy, Annotations: Object[], Preferences: Object) {
   let annotation = (evt.target as HTMLInputElement).parentNode! as HTMLElement
 
   // annotations are <section> elements if div returned find in child nodes the section element
   if (annotation.tagName === 'DIV')
     annotation = annotation.firstChild! as HTMLElement
 
-  if (annotation.className === 'linkAnnotation' && evt.type === 'click') {
+  const preferences = mergePreferences(defaultAnnotationPreferences, Preferences)
+
+  if (annotation.className === 'linkAnnotation' && preferences['linkAnnotation'].events.includes(evt.type)) {
     const id: string | undefined = annotation.dataset?.annotationId
     if (id)
-      return linkAnnotation(getAnnotationsByKey('id', id, Annotations)[0] as LinkAnnotation, PDFDoc)
+      return preferences['linkAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0] as LinkAnnotation, PDFDoc)
   }
-  else if (annotation.className.includes('popupAnnotation') || annotation.className.includes('textAnnotation')) {
+  else if (annotation.className.includes('popupAnnotation') && preferences['popupAnnotation'].events.includes(evt.type)) {
     mergePopupArgs(annotation)
+    return preferences['popupAnnotation'].handler(evt, annotation)
+  }
+  else if (annotation.className.includes('textAnnotation') && preferences['textAnnotation'].events.includes(evt.type)) {
+    mergePopupArgs(annotation)
+    return preferences['textAnnotation'].handler(evt, annotation)
   }
   else if (annotation.className.includes('fileAttachmentAnnotation')) {
     mergePopupArgs(annotation)
     const id = annotation.dataset.annotationId
-    if (id && evt.type === 'dblclick')
-      return fileAnnotation(getAnnotationsByKey('id', id, Annotations)[0])
+    if (id && preferences['fileAttachmentAnnotation'].events.includes(evt.type))
+      return preferences['fileAttachmentAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
   }
-  else if (annotation.className.includes('textWidgetAnnotation') && evt.type === 'input') {
+  else if (annotation.className.includes('textWidgetAnnotation') && preferences['textWidgetAnnotation'].events.includes(evt.type)) {
     let inputElement: HTMLInputElement | HTMLTextAreaElement = annotation.getElementsByTagName('input')[0]
     if (!inputElement)
       inputElement = annotation.getElementsByTagName('textarea')[0]
-    return inputAnnotation(inputElement)
+    return preferences['textWidgetAnnotation'].handler(evt, inputElement)
   }
-  else if (annotation.className.includes('choiceWidgetAnnotation') && evt.type === 'input') {
-    return inputAnnotation(annotation.getElementsByTagName('select')[0])
+  else if (annotation.className.includes('choiceWidgetAnnotation') && preferences['choiceWidgetAnnotation'].events.includes(evt.type)) {
+    return preferences['choiceWidgetAnnotation'].handler(evt, annotation.getElementsByTagName('select')[0])
   }
-  else if (annotation.className.includes('buttonWidgetAnnotation checkBox') && evt.type === 'change') {
-    return inputAnnotation(annotation.getElementsByTagName('input')[0])
+  else if (annotation.className.includes('buttonWidgetAnnotation checkBox') && preferences['checkBoxWidgetAnnotation'].events.includes(evt.type)) {
+    return preferences['checkBoxWidgetAnnotation'].handler(evt, annotation.getElementsByTagName('input')[0])
   }
-  else if (annotation.className.includes('buttonWidgetAnnotation radioButton') && evt.type === 'change') {
+  else if (annotation.className.includes('buttonWidgetAnnotation radioButton') && preferences['radioButtonWidgetAnnotation'].events.includes(evt.type)) {
     const id = annotation.dataset.annotationId
     if (id) {
       const anno = getAnnotationsByKey('id', id, Annotations)[0]
@@ -180,25 +234,27 @@ function annotationEventsHandler(evt: Event, PDFDoc: PDFDocumentProxy, Annotatio
         if (radioAnnotations.buttonValue)
           radioOptions.push(radioAnnotations.buttonValue)
       }
-      return inputAnnotation(annotation.getElementsByTagName('input')[0], {
+      return preferences['radioButtonWidgetAnnotation'].handler(evt, annotation.getElementsByTagName('input')[0], {
         value: anno.buttonValue,
         defaultValue: anno.fieldValue,
         options: radioOptions,
       })
     }
   }
-  else if (annotation.className.includes('buttonWidgetAnnotation pushButton') && evt.type === 'click') {
+  else if (annotation.className.includes('buttonWidgetAnnotation pushButton') && preferences['pushButtonWidgetAnnotation'].events.includes(evt.type)) {
     const id = annotation.dataset.annotationId
     if (id) {
       const anno = getAnnotationsByKey('id', id, Annotations)[0]
       if (!anno.resetForm) {
-        return inputAnnotation(
+        return preferences['pushButtonWidgetAnnotation'].handler(
+          evt, 
           { name: anno.fieldName, type: 'button' },
           { actions: anno.actions, reset: false },
         )
       }
       else {
-        return inputAnnotation(
+        return preferences['pushButtonWidgetAnnotation'].handler(
+          evt, 
           { name: anno.fieldName, type: 'button' },
           { actions: anno.actions, reset: true },
         )

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import * as PDFJS from 'pdfjs-dist'
-import { onMounted, ref, toRaw, watch } from 'vue'
+import { inject, onMounted, ref, toRaw, watch } from 'vue'
 
 import type { PDFDocumentProxy, PDFPageProxy, PageViewport } from 'pdfjs-dist'
 import type { AnnotationLayerParameters } from 'pdfjs-dist/types/src/display/annotation_layer'
@@ -28,9 +28,10 @@ const emit = defineEmits<{
 
 const layer = ref<HTMLDivElement>()
 const annotations = ref<any[]>()
+const userAnnotationPreferences = inject('userAnnotationPreferences', {})
 
 function annotationsEvents(evt: Event) {
-  const value = annotationEventsHandler(evt, props.document!, annotations.value!)
+  const value = annotationEventsHandler(evt, props.document!, annotations.value!, userAnnotationPreferences)
   Promise.resolve(value).then((data) => {
     if (data)
       emit('annotation', data)
@@ -60,7 +61,9 @@ async function getAnnotations() {
     })
   }
 
-  return annotations
+  return userAnnotationPreferences.global?.preBuildHandler 
+    ? userAnnotationPreferences.global.preBuildHandler(annotations)
+    : annotations
 }
 
 async function render() {
