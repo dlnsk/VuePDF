@@ -111,6 +111,12 @@ async function render() {
   }
   PDFJS.AnnotationLayer.render(parameters)
 
+  // Remove all built in event handlers
+  if (userAnnotationPreferences.global?.removeBuiltInHandlers) {
+    const cloneLayer = layer.value.cloneNode(true)
+    layer.value.replaceChildren(...cloneLayer.children)
+  }
+
   for (const evtHandler of EVENTS_TO_HANDLER)
     layer.value!.addEventListener(evtHandler, annotationsEvents)
 }
