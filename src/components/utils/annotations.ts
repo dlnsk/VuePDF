@@ -145,6 +145,10 @@ function mergePreferences(target: Object, source: Object) {
   return result
 }
 
+function includesEvery(list: DOMTokenList, values: Array) {
+  return values.every((element) => list.contains(element));
+}
+
 const defaultAnnotationPreferences: Object = {
   linkAnnotation: {
     events: ['click'],
@@ -194,38 +198,40 @@ function annotationEventsHandler(evt: Event, PDFDoc: PDFDocumentProxy, Annotatio
 
   const preferences = mergePreferences(defaultAnnotationPreferences, Preferences)
 
-  if (annotation.className === 'linkAnnotation' && preferences['linkAnnotation'].events.includes(evt.type)) {
+  if (annotation.classList.contains('linkAnnotation') && preferences['linkAnnotation'].events.includes(evt.type)) {
     const id: string | undefined = annotation.dataset?.annotationId
     if (id)
       return preferences['linkAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0] as LinkAnnotation, PDFDoc)
   }
-  else if (annotation.className.includes('popupAnnotation') && preferences['popupAnnotation'].events.includes(evt.type)) {
+  else if (annotation.classList.contains('popupAnnotation') && preferences['popupAnnotation'].events.includes(evt.type)) {
     mergePopupArgs(annotation)
-    return preferences['popupAnnotation'].handler(evt, annotation)
+    const id = annotation.dataset.annotationId
+    return preferences['popupAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
   }
-  else if (annotation.className.includes('textAnnotation') && preferences['textAnnotation'].events.includes(evt.type)) {
+  else if (annotation.classList.contains('textAnnotation') && preferences['textAnnotation'].events.includes(evt.type)) {
     mergePopupArgs(annotation)
-    return preferences['textAnnotation'].handler(evt, annotation)
+    const id = annotation.dataset.annotationId
+    return preferences['textAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
   }
-  else if (annotation.className.includes('fileAttachmentAnnotation')) {
+  else if (annotation.classList.contains('fileAttachmentAnnotation')) {
     mergePopupArgs(annotation)
     const id = annotation.dataset.annotationId
     if (id && preferences['fileAttachmentAnnotation'].events.includes(evt.type))
       return preferences['fileAttachmentAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
   }
-  else if (annotation.className.includes('textWidgetAnnotation') && preferences['textWidgetAnnotation'].events.includes(evt.type)) {
+  else if (annotation.classList.contains('textWidgetAnnotation') && preferences['textWidgetAnnotation'].events.includes(evt.type)) {
     let inputElement: HTMLInputElement | HTMLTextAreaElement = annotation.getElementsByTagName('input')[0]
     if (!inputElement)
       inputElement = annotation.getElementsByTagName('textarea')[0]
     return preferences['textWidgetAnnotation'].handler(evt, inputElement)
   }
-  else if (annotation.className.includes('choiceWidgetAnnotation') && preferences['choiceWidgetAnnotation'].events.includes(evt.type)) {
+  else if (annotation.classList.contains('choiceWidgetAnnotation') && preferences['choiceWidgetAnnotation'].events.includes(evt.type)) {
     return preferences['choiceWidgetAnnotation'].handler(evt, annotation.getElementsByTagName('select')[0])
   }
-  else if (annotation.className.includes('buttonWidgetAnnotation checkBox') && preferences['checkBoxWidgetAnnotation'].events.includes(evt.type)) {
+  else if (includesEvery(annotation.classList, ['buttonWidgetAnnotation', 'checkBox']) && preferences['checkBoxWidgetAnnotation'].events.includes(evt.type)) {
     return preferences['checkBoxWidgetAnnotation'].handler(evt, annotation.getElementsByTagName('input')[0])
   }
-  else if (annotation.className.includes('buttonWidgetAnnotation radioButton') && preferences['radioButtonWidgetAnnotation'].events.includes(evt.type)) {
+  else if (includesEvery(annotation.classList, ['buttonWidgetAnnotation', 'radioButton']) && preferences['radioButtonWidgetAnnotation'].events.includes(evt.type)) {
     const id = annotation.dataset.annotationId
     if (id) {
       const anno = getAnnotationsByKey('id', id, Annotations)[0]
@@ -241,7 +247,7 @@ function annotationEventsHandler(evt: Event, PDFDoc: PDFDocumentProxy, Annotatio
       })
     }
   }
-  else if (annotation.className.includes('buttonWidgetAnnotation pushButton') && preferences['pushButtonWidgetAnnotation'].events.includes(evt.type)) {
+  else if (includesEvery(annotation.classList, ['buttonWidgetAnnotation', 'pushButton']) && preferences['pushButtonWidgetAnnotation'].events.includes(evt.type)) {
     const id = annotation.dataset.annotationId
     if (id) {
       const anno = getAnnotationsByKey('id', id, Annotations)[0]
