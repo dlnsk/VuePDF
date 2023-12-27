@@ -194,7 +194,7 @@ const defaultAnnotationPreferences: Object = {
 
 // Use this function to handle annotation events
 function annotationEventsHandler(evt: Event, PDFDoc: PDFDocumentProxy, Annotations: Object[], Preferences: Object) {
-  let annotation = (evt.target as HTMLInputElement).parentNode! as HTMLElement
+  let annotation = (evt.target as HTMLElement).closest('section') as HTMLElement
 
   // annotations are <section> elements if div returned find in child nodes the section element
   if (annotation.tagName === 'DIV')
