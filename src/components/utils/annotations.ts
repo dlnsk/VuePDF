@@ -162,6 +162,10 @@ const defaultAnnotationPreferences: Object = {
     events: [],
     handler: () => {},
   },
+  caretAnnotation: {
+    events: [],
+    handler: () => {},
+  },
   fileAttachmentAnnotation: {
     events: ['dblclick'],
     handler: fileAnnotation,
@@ -212,6 +216,11 @@ function annotationEventsHandler(evt: Event, PDFDoc: PDFDocumentProxy, Annotatio
     mergePopupArgs(annotation)
     const id = annotation.dataset.annotationId
     return preferences['textAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
+  }
+  else if (annotation.classList.contains('caretAnnotation') && preferences['caretAnnotation'].events.includes(evt.type)) {
+    const id = annotation.dataset.annotationId
+    mergePopupArgs(annotation)
+    return preferences['caretAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
   }
   else if (annotation.classList.contains('fileAttachmentAnnotation')) {
     mergePopupArgs(annotation)
