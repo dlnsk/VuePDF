@@ -119,6 +119,16 @@ async function render() {
 
   for (const evtHandler of EVENTS_TO_HANDLER)
     layer.value!.addEventListener(evtHandler, annotationsEvents)
+
+  // Call post build handler to comb created dom elements
+  if (userAnnotationPreferences.global?.postBuildHandler) {
+    const list = Array.from(layer.value.children).map(el => ({ 
+        element: el, 
+        annotation: annotations.value.find(a => a.id === el.dataset.annotationId),
+      })
+    )
+    userAnnotationPreferences.global.postBuildHandler(list, layer.value)
+  }
 }
 
 watch(() => props.viewport, () => {
