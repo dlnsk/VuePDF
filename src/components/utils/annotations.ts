@@ -162,6 +162,10 @@ const defaultAnnotationPreferences: Object = {
     events: [],
     handler: () => {},
   },
+  freeTextAnnotation: {
+    events: [],
+    handler: () => {},
+  },
   caretAnnotation: {
     events: [],
     handler: () => {},
@@ -216,6 +220,11 @@ function annotationEventsHandler(evt: Event, PDFDoc: PDFDocumentProxy, Annotatio
     mergePopupArgs(annotation)
     const id = annotation.dataset.annotationId
     return preferences['textAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
+  }
+  else if (annotation.classList.contains('freeTextAnnotation') && preferences['freeTextAnnotation'].events.includes(evt.type)) {
+    mergePopupArgs(annotation)
+    const id = annotation.dataset.annotationId
+    return preferences['freeTextAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
   }
   else if (annotation.classList.contains('caretAnnotation') && preferences['caretAnnotation'].events.includes(evt.type)) {
     const id = annotation.dataset.annotationId
