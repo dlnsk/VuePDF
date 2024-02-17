@@ -99,23 +99,19 @@ async function linkAnnotation(evt: Event, annotation: {
   unsafeUrl?: string
 }, PDFDoc: PDFDocumentProxy) {
   if (annotation.dest) {
-    // Get referenced page number of internal link
+    let explicitDest = annotation.dest
     if (typeof annotation.dest === 'string') {
-      return buildAnnotationData(INTERNAL_LINK, {
-        referencedPage: Number(annotation.dest.substring(1, annotation.dest.length)),
-        offset: null,
-      })
+      explicitDest = await PDFDoc.getDestination(annotation.dest);
     }
-    else {
-      const pageIndex = await PDFDoc.getPageIndex(annotation.dest[0] as RefProxy)
-      return buildAnnotationData(INTERNAL_LINK, {
-        referencedPage: pageIndex + 1,
-        offset: {
-          left: annotation.dest[2],
-          bottom: annotation.dest[3],
-        },
-      })
-    }
+    // Get referenced page number of internal link
+    const pageIndex = await PDFDoc.getPageIndex(explicitDest[0] as RefProxy)
+    return buildAnnotationData(INTERNAL_LINK, {
+      referencedPage: pageIndex + 1,
+      offset: {
+        left: explicitDest[2],
+        bottom: explicitDest[3],
+      },
+    })
   }
   else if (annotation.url) {
     return buildAnnotationData(LINK, {
