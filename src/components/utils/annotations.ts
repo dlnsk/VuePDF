@@ -166,7 +166,39 @@ const defaultAnnotationPreferences: Object = {
     events: [],
     handler: () => {},
   },
+  strikeoutAnnotation: {
+    events: [],
+    handler: () => {},
+  },
+  underlineAnnotation: {
+    events: [],
+    handler: () => {},
+  },
   highlightAnnotation: {
+    events: [],
+    handler: () => {},
+  },
+  inkAnnotation: {
+    events: [],
+    handler: () => {},
+  },
+  lineAnnotation: {
+    events: [],
+    handler: () => {},
+  },
+  squareAnnotation: {
+    events: [],
+    handler: () => {},
+  },
+  circleAnnotation: {
+    events: [],
+    handler: () => {},
+  },
+  polygonAnnotation: {
+    events: [],
+    handler: () => {},
+  },
+  polylineAnnotation: {
     events: [],
     handler: () => {},
   },
@@ -231,10 +263,50 @@ function annotationEventsHandler(evt: Event, PDFDoc: PDFDocumentProxy, Annotatio
     mergePopupArgs(annotation)
     return preferences['caretAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
   }
+  else if (annotation.classList.contains('strikeoutAnnotation') && preferences['strikeoutAnnotation'].events.includes(evt.type)) {
+    const id = annotation.dataset.annotationId
+    mergePopupArgs(annotation)
+    return preferences['strikeoutAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
+  }
+  else if (annotation.classList.contains('underlineAnnotation') && preferences['underlineAnnotation'].events.includes(evt.type)) {
+    const id = annotation.dataset.annotationId
+    mergePopupArgs(annotation)
+    return preferences['underlineAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
+  }
   else if (annotation.classList.contains('highlightAnnotation') && preferences['highlightAnnotation'].events.includes(evt.type)) {
     const id = annotation.dataset.annotationId
     mergePopupArgs(annotation)
     return preferences['highlightAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
+  }
+  else if (annotation.classList.contains('inkAnnotation') && preferences['inkAnnotation'].events.includes(evt.type)) {
+    const id = annotation.dataset.annotationId
+    mergePopupArgs(annotation)
+    return preferences['inkAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
+  }
+  else if (annotation.classList.contains('lineAnnotation') && preferences['lineAnnotation'].events.includes(evt.type)) {
+    const id = annotation.dataset.annotationId
+    mergePopupArgs(annotation)
+    return preferences['lineAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
+  }
+  else if (annotation.classList.contains('squareAnnotation') && preferences['squareAnnotation'].events.includes(evt.type)) {
+    const id = annotation.dataset.annotationId
+    mergePopupArgs(annotation)
+    return preferences['squareAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
+  }
+  else if (annotation.classList.contains('circleAnnotation') && preferences['circleAnnotation'].events.includes(evt.type)) {
+    const id = annotation.dataset.annotationId
+    mergePopupArgs(annotation)
+    return preferences['circleAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
+  }
+  else if (annotation.classList.contains('polygonAnnotation') && preferences['polygonAnnotation'].events.includes(evt.type)) {
+    const id = annotation.dataset.annotationId
+    mergePopupArgs(annotation)
+    return preferences['polygonAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
+  }
+  else if (annotation.classList.contains('polylineAnnotation') && preferences['polylineAnnotation'].events.includes(evt.type)) {
+    const id = annotation.dataset.annotationId
+    mergePopupArgs(annotation)
+    return preferences['polylineAnnotation'].handler(evt, getAnnotationsByKey('id', id, Annotations)[0])
   }
   else if (annotation.classList.contains('fileAttachmentAnnotation')) {
     mergePopupArgs(annotation)
