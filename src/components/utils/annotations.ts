@@ -113,7 +113,7 @@ async function linkAnnotation(evt: Event, annotation: {
       },
     })
   }
-  else if (annotation.url) {
+  else {
     return buildAnnotationData(LINK, {
       url: annotation.url,
       unsafeUrl: annotation.unsafeUrl,
@@ -348,14 +348,14 @@ function annotationEventsHandler(evt: Event, PDFDoc: PDFDocumentProxy, Annotatio
       const anno = getAnnotationsByKey('id', id, Annotations)[0]
       if (!anno.resetForm) {
         return preferences['pushButtonWidgetAnnotation'].handler(
-          evt, 
+          evt,
           { name: anno.fieldName, type: 'button' },
           { actions: anno.actions, reset: false },
         )
       }
       else {
         return preferences['pushButtonWidgetAnnotation'].handler(
-          evt, 
+          evt,
           { name: anno.fieldName, type: 'button' },
           { actions: anno.actions, reset: true },
         )
